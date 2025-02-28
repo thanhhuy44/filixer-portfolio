@@ -1,10 +1,20 @@
+"use client";
+
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
+import AvatarMe from "@/assets/images/me/about.jpeg";
 import Section from "@/components/layout/section";
+import TypingText from "@/components/ui/typing-text";
 
 function About() {
   const t = useTranslations();
+  // Track the scroll position
+  const { scrollYProgress } = useScroll();
+  // Create a parallax effect by mapping scroll position to translateY
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, 200]);
+
   return (
     <Section
       heading={{
@@ -13,20 +23,32 @@ function About() {
       className="bg-gray-50"
     >
       <div className="grid gap-y-4 md:grid-cols-3 md:gap-x-12 xl:gap-x-20">
-        <div>
+        <motion.div
+          style={{
+            y: y1,
+          }}
+        >
           <Image
-            src="https://s.yimg.com/ny/api/res/1.2/GsFpocadXuUN1VIyEtQWxg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTkzNA--/https://media.zenfs.com/en-GB/blogs/ukiemovies/bat-3.jpg"
+            src={AvatarMe}
             alt=""
             className="h-auto w-full"
             width={500}
             height={500}
           />
-        </div>
+        </motion.div>
         <div className="col-span-2 space-y-6">
           <h4 className="heading-3 font-semibold">
-            Curious about me? Here you have it:
+            <TypingText text="Curious about me? Here you have it:" once />
           </h4>
-          <article className="text-body-2 space-y-3 text-gray-600">
+          <motion.article
+            initial={{
+              opacity: 0,
+            }}
+            whileInView={{
+              opacity: 1,
+            }}
+            className="text-body-2 space-y-3 text-gray-600"
+          >
             <p>
               {
                 "I'm a passionate, self-proclaimed designer who specializes in full stack development (React.js & Node.js). I am very enthusiastic about bringing the technical and visual aspects of digital products to life. User experience, pixel perfect design, and writing clear, readable, highly performant code matters to me."
@@ -52,7 +74,7 @@ function About() {
                 "One last thing, I'm available for freelance work, so feel free to reach out and say hello! I promise I don't bite 😉"
               }
             </p>
-          </article>
+          </motion.article>
         </div>
       </div>
     </Section>

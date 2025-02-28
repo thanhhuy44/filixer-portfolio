@@ -1,7 +1,12 @@
+"use client";
+
 import { ClassValue } from "clsx";
+import { motion } from "framer-motion";
 import { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
+
+import TypingText from "../ui/typing-text";
 
 interface Props {
   heading?: {
@@ -19,12 +24,33 @@ function Section({ heading, className = "", children }: Props) {
         {heading ? (
           <div className="space-y-2 text-center lg:space-y-4">
             {heading.title ? (
-              <div className="mx-auto w-fit rounded-full bg-gray-200 px-5 py-1">
+              <motion.div
+                initial={{
+                  rotate: "-210deg",
+                }}
+                whileInView={{
+                  rotate: 0,
+                }}
+                className="mx-auto w-fit rounded-full bg-gray-200 px-5 py-1"
+              >
                 <h3 className="text-body-3 text-gray-600">{heading?.title}</h3>
-              </div>
+              </motion.div>
             ) : null}
             {heading.subTitle ? (
-              <p className="mx-auto max-w-xl">{heading?.subTitle}</p>
+              <motion.p
+                initial={{
+                  opacity: 0,
+                }}
+                whileInView={{
+                  opacity: 1,
+                }}
+                transition={{
+                  delay: 0.5,
+                }}
+                className="mx-auto max-w-xl"
+              >
+                <TypingText text={heading?.subTitle} />
+              </motion.p>
             ) : null}
           </div>
         ) : null}
