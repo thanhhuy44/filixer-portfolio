@@ -26,10 +26,15 @@ function Section({ heading, className = "", children }: Props) {
             {heading.title ? (
               <motion.div
                 initial={{
-                  rotate: "-210deg",
+                  opacity: 0,
+                  rotate: 360,
                 }}
                 whileInView={{
                   rotate: 0,
+                  opacity: 1,
+                }}
+                viewport={{
+                  once: true,
                 }}
                 className="mx-auto w-fit rounded-full bg-gray-200 px-5 py-1"
               >
@@ -47,9 +52,12 @@ function Section({ heading, className = "", children }: Props) {
                 transition={{
                   delay: 0.5,
                 }}
+                viewport={{
+                  once: true,
+                }}
                 className="mx-auto max-w-xl"
               >
-                <TypingText text={heading?.subTitle} />
+                <TypingText text={heading?.subTitle} once />
               </motion.p>
             ) : null}
           </div>
